@@ -1,0 +1,32 @@
+#BUILD DOCKER IMAGE
+#-t USED FOR TAG NAME
+# . IS CURRENT DIRECTORY ON HOST MACHINE WHERE DOCKERFILE IS LOCATED, TELLS DOCKER WHERE TO FIND
+# DOCKERFILE AND OTHER FILES NEEDED TO BUILD PROCESS
+docker build -t python-app .
+
+
+#RUN DOCKER CONTAINER
+docker run python-app
+
+
+#NAME A CONTAINER
+docker run --name hello python-app
+
+
+#LIST ALL RUNNING CONTAINER
+docker ps
+
+
+#LIST ALL CONTAINER
+docker ps -a
+
+
+#KILL/STOP A CONTAINER
+docker stop <name or id>
+docker kill <name or id> (if container doesn't stop after 10 seconds then use forceful stop without clean up        resources)
+
+
+#KILL IMAGE
+docker rmi <name or id> (if container is in use, docker will prevent to delete)
+docker rmi -f my-image  (if want to forceful delete the image)
+docker rmi my-image1 my-image2 abcdef123456 (can specify multiple image or id)
