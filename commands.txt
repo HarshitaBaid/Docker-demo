@@ -30,3 +30,48 @@ docker kill <name or id> (if container doesn't stop after 10 seconds then use fo
 docker rmi <name or id> (if container is in use, docker will prevent to delete)
 docker rmi -f my-image  (if want to forceful delete the image)
 docker rmi my-image1 my-image2 abcdef123456 (can specify multiple image or id)
+
+
+
+DOCKER COMPOSE
+
+
+#starts up the services defined in docker-compose.yml file
+#creates and attaches to the containers for those services
+#build image if image do not exist
+docker-compose up
+
+#stops the running services and cleans up resources created by docker-compose up
+docker-compose down
+
+#builds or rebuilds the Docker images for services defined in the docker-compose.yml file
+docker-compose build
+
+#to start the service in detached mode
+docker-compose up -d
+
+#starts the services defined in the docker-compose.yml file without building them
+#start existing services without rebuilding
+docker-compose start
+
+# stops the running services defined in the docker-compose.yml file without removing them
+docker-compose stop
+
+#restarts the services defined in the docker-compose.yml file
+#stops and then starts the services
+docker-compose restart
+
+#lists the services defined in the docker-compose.yml file and their status (running, stopped, etc.)
+docker-compose ps
+
+#displays log output from services defined in the docker-compose.yml file
+#can specify a service name to view logs for a specific service
+docker-compose logs
+docker-compose logs <service_name>
+
+#to build service by creating image even it is already created and in detached mode
+docker-compose up -d --build
+
+#to run commands inside a container
+docker exec -it <container_name> <command>
+docker exec docker-demo-web ls / (contents of given directory)

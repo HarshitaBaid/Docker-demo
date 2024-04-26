@@ -1,0 +1,42 @@
+#version of the Docker Compose file format
+version: '4.29.0'
+
+#defines the services that compose your application
+services:
+
+    #Defines a service named 'web'
+    web:
+        #Specifies the build context(sets of files and directories) for the web service. It builds the Docker image using the Dockerfile located in the current directory (.)
+        build: .
+
+        #Maps port 5000 of the host to port 5000 of the web service container. This allows access to the web service via http://localhost:5000
+        ports:
+            - "5000:5000"
+
+        #db as a service needs to be started before web. Docker-compose stop will first stop the api and only then stop the db service.
+        depends_on:
+            - db
+    
+    db:
+        #Docker image to be used for the db service
+        image: mysql:5.7
+        
+        #Sets environment variables required for configuring the MySQL database
+        environment:
+            MYSQL_ROOT_PASSWORD: example #Sets the root password for MySQL.
+            MYSQL_DATABASE: mydatabase #Creates a database named mydatabase.
+            MYSQL_USER: myuser #Creates a MySQL user named myuser.
+            MYSQL_PASSWORD: mypassword #Sets the password for the myuser MySQL user.
+
+        #Maps port 3306 of the host to port 3306 of the db service container
+        ports:
+            - "3306:3306"
+
+        #Defines a Docker volume named db-data and mounts it to the path /var/lib/mysql inside the db service container. This volume is used to persist the MySQL data, ensuring that the database data is not lost when the container is stopped or restarted
+        volumes:
+            - db-data:/var/lib/mysql
+
+
+#This section defines Docker volumes used by the services. Defines a named volume named db-data. This volume is used by the db service to persist MySQL data
+volumes:
+    db-data:
